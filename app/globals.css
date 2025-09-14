@@ -8,6 +8,16 @@
   --safe: #10B981;
   --warn: #F59E0B;
   --danger: #EF4444;
+  
+  /* Additional design tokens */
+  --brand-light: #FF7A33;
+  --brand-dark: #CC4700;
+  --surface: #1A1A1A;
+  --surface-light: #2A2A2A;
+  --border: rgba(255, 255, 255, 0.1);
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
 }
 
 html, body {
