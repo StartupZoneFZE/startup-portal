@@ -1,0 +1,56 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  STAFF
+  CLIENT
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(CLIENT)
+  createdAt    DateTime @default(now())
+  
+  // Relations
+  createdRequests ServiceRequest[] @relation("CreatedBy")
+  assignedRequests ServiceRequest[] @relation("AssignedTo")
+}
+
+model ServiceTemplate {
+  id           String   @id @default(cuid())
+  code         String   @unique
+  category     String
+  subCategory  String
+  title        String
+  description  String
+  formSchema   Json
+  requiredDocs Json
+  slaDays      Int
+  isActive     Boolean  @default(true)
+  
+  // Relations
+  requests     ServiceRequest[]
+}
+
+model ServiceRequest {
+  id          String   @id @default(cuid())
+  companyName String?
+  templateId  String
+  template    ServiceTemplate @relation(fields: [templateId], references: [id])
+  status      String   @default("DRAFT")
+  assigneeId  String?
+  assignee    User?    @relation("AssignedTo", fields: [assigneeId], references: [id])
+  createdById String
+  createdBy   User     @relation("CreatedBy", fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
