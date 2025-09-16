@@ -1,18 +1,18 @@
-import { PrismaClient } from '@prisma/client'
 import Link from 'next/link'
 import { ChevronRight, Package } from 'lucide-react'
 
-const prisma = new PrismaClient()
-
 export default async function ServicesPage() {
-  // Get distinct categories
-  const templates = await prisma.serviceTemplate.findMany({
-    where: { isActive: true },
-    select: { category: true },
-    distinct: ['category'],
-  })
-
-  const categories = templates.map(t => t.category)
+  // Mock data for now - will be replaced with database query
+  const categories = ['License', 'Establishment Card', 'Immigration', 'Corporate Services']
+  
+  // Once database is connected, uncomment this:
+  // const prisma = new PrismaClient()
+  // const templates = await prisma.serviceTemplate.findMany({
+  //   where: { isActive: true },
+  //   select: { category: true },
+  //   distinct: ['category'],
+  // })
+  // const categories = templates.map(t => t.category)
 
   return (
     <div>

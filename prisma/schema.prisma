@@ -1,6 +1,8 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  // Add directUrl for migrations if using connection pooling
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 generator client {
